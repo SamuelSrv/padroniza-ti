@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PadronizaTI</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="img/icon.ico">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="page-header">
+            <img id="logo-img" src="img/logo-inicio.png" alt="Logo Menu">
+            <a href="editar.html">Gerenciar Padrões</a>
+            <button id="theme-toggle">
+                <img id="theme-icon" src="img/modo-escuro.png" alt="Mudar Tema">
+            </button>
+        </div>
+
+        <label for="templateSelector">Selecione o Padrão do Chamado:</label>
+        <select id="templateSelector"></select>
+
+        <label for="userInput">Qual foi a ação principal realizada?</label>
+        <input type="text" id="userInput" placeholder="Ex: Instalei o Office 365 na máquina do usuário">
+
+        <button id="generateBtn">Gerar Script de Encerramento</button>
+
+        <div class="output-header">
+            <label for="outputScript">Script gerado (editável):</label>
+        </div>
+
+        <textarea id="outputScript" placeholder="O script aprimorado aparecerá aqui..."></textarea>
+
+        <div class="centralizaBotao">
+            <button id="copyBtn" class="btn-secondary">Copiar</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="theme.js"></script>
+</body>
+
+</html>

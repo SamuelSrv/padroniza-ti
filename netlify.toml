@@ -1,0 +1,15 @@
+# Configurações de build
+[build]
+  # Onde estão os arquivos do seu site (front-end)
+  publish = "public"
+  # Onde estão as suas funções serverless (back-end)
+  functions = "netlify/functions"
+
+# Regra para redirecionar as chamadas de API
+[[redirects]]
+  # Quando o front-end chamar "/api/generate"
+  from = "/api/*"
+  # O Netlify deve, internamente, chamar a função correspondente
+  to = "/.netlify/functions/:splat"
+  # Código de status OK
+  status = 200

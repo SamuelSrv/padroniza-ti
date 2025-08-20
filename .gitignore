@@ -1,0 +1,5 @@
+# Ignorar a pasta de dependências do Node.js
+node_modules/
+
+# Se você ainda tiver um arquivo .env localmente por algum motivo, ignore-o também
+.env
