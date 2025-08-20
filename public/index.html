@@ -4,30 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PadronizaTI</title>
+    <title>PadronizaTI - Gerar Padrão</title>
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" type="image/x-icon" href="img/icon.ico">
 </head>
 
 <body>
 
-    <div class="container">
-        <div class="container"> <button id="theme-toggle">
+    <header id="main-header">
+        <a href="index.html" class="header-logo">
+            <img src="img/logo-inicio.png" alt="PadronizaTI Logo">
+        </a>
+        <nav class="main-nav">
+            <a href="index.html">Gerar Padrão</a>
+            <a href="editar.html">Gerenciar Padrões</a>
+        </nav>
+        <div class="header-actions">
+            <button id="theme-toggle">
                 <img id="theme-icon" src="img/modo-escuro.png" alt="Mudar Tema">
             </button>
-
-            <div class="logo-container">
-                <img id="logo-img" src="img/logo-inicio.png" alt="Logo Menu">
-            </div>
-
-            <nav class="main-nav">
-                <a href="index.html">Início</a>
-                <a href="editar.html">Gerenciar Padrões</a>
-            </nav>
-
-            <label for="templateSelector">Selecione o Padrão do Chamado:</label>
-            ...
         </div>
+    </header>
+
+    <div class="container">
+
+        <h1>Gerador de Script de Encerramento</h1>
 
         <label for="templateSelector">Selecione o Padrão do Chamado:</label>
         <select id="templateSelector"></select>
