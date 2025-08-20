@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeIcon = document.getElementById('theme-icon');
 
     // **IMPORTANTE**: Altere os nomes dos arquivos para os ícones que você tem
-    const lightIcon = 'img/lua.png'; // Ícone para mostrar no tema claro (para MUDAR para escuro)
-    const darkIcon = 'img/sol.png';  // Ícone para mostrar no tema escuro (para MUDAR para claro)
+    const lightIcon = 'img/modo-escuro.png'; // Ícone para mostrar no tema claro (para MUDAR para escuro)
+    const darkIcon = 'img/modo-escuro.png';  // Ícone para mostrar no tema escuro (para MUDAR para claro)
 
     function applyTheme() {
         // Pega o tema salvo ou usa 'light' como padrão
@@ -18,17 +18,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            let currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    themeToggle.addEventListener('click', () => {
+        // NOVO: Adiciona a classe para iniciar a animação de giro
+        themeIcon.classList.add('spin-animation');
 
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
+        let currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
-            // CORRIGIDO: Atualiza a imagem do ícone para refletir o novo estado
-            themeIcon.src = newTheme === 'dark' ? darkIcon : lightIcon;
-        });
-    }
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+
+        themeIcon.src = newTheme === 'dark' ? darkIcon : lightIcon;
+
+        // NOVO: Remove a classe após a animação terminar (500ms = 0.5s)
+        // Isso permite que a animação ocorra novamente no próximo clique.
+        setTimeout(() => {
+            themeIcon.classList.remove('spin-animation');
+        }, 500);
+    });
+}
 
     // Aplica o tema salvo assim que a página carrega
     applyTheme();
