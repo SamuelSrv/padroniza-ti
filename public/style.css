@@ -55,13 +55,14 @@ body {
     z-index: 1000;
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Alinha itens nas pontas */
+    justify-content: space-between;
+    /* Alinha itens nas pontas */
     box-sizing: border-box;
     transition: background-color 0.3s;
 }
 
 .header-logo img {
-    height: 35px; /* Tamanho do logo na barra */
+    height: 50px;
     width: auto;
 }
 
@@ -150,9 +151,16 @@ button:hover {
     background-color: #0056b3;
 }
 
-textarea {
+#userInput {
+    height: 110px;
+    font-size: 16px;
+    resize: none;
+}
+
+#outputScript {
     height: 200px;
     font-size: 14px;
+    resize: none;
 }
 
 #theme-toggle {
@@ -165,7 +173,8 @@ textarea {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0; /* Reseta margem */
+    margin: 0;
+    /* Reseta margem */
 }
 
 #theme-toggle:hover {

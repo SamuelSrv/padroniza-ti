@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
 
     // --- CONFIGURAÇÃO ---
-    // A URL agora é relativa. O Netlify sabe para onde redirecionar.
     const API_URL = '/api/generate';
 
     // --- OBJETOS E VARIÁVEIS ---
@@ -22,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 instalacao: `Prezado(a) usuário(a),\n\nO seu chamado foi atendido e a instalação solicitada foi concluída com sucesso.\n\nAção principal executada: \${'${acao}'}.\n\nO software foi testado e está funcionando conforme o esperado.\n\nO chamado está sendo encerrado.\n\nAtenciosamente,\nEquipe de Suporte TI`,
                 resetSenha: `Prezado(a) usuário(a),\n\nConforme solicitado, sua senha foi redefinida.\n\nAção principal executada: \${'${acao}'}.\n\nPor favor, use a senha provisória e crie uma nova no primeiro login.\n\nO chamado está sendo encerrado.\n\nAtenciosamente,\nEquipe de Suporte TI`,
                 problemaRede: `Prezado(a) usuário(a),\n\nO problema de conexão foi resolvido.\n\nAção principal executada: \${'${acao}'}.\n\nA conexão foi restabelecida e testada.\n\nO chamado está sendo encerrado.\n\nAtenciosamente,\nEquipe de Suporte TI`,
-                encerramentoSimples: `Prezado(a) usuário(a),\n\nAção principal executada: \${'${acao}'}.\n\nO chamado está sendo encerrado.\n\nAtenciosamente,\nEquipe de Suporte TI`
+                encerramentoSimples: `Prezado(a) usuáriso(a),\n\nAção principal executada: \${'${acao}'}.\n\nO chamado está sendo encerrado.\n\nAtenciosamente,\nEquipe de Suporte TI`
             };
             localStorage.setItem('meusTemplates', JSON.stringify(templates));
         } else {
@@ -59,12 +58,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
         generateBtn.disabled = true;
         generateBtn.textContent = 'Gerando com IA...';
-        outputScript.value = 'Aguarde, a Inteligência Artificial está pensando...';
+        outputScript.value = 'Gerando Registro...';
 
         const prompt = `
-            Você é um especialista em Suporte Técnico (TI) sênior, redigindo o registro de um chamado para um sistema de tickets.
-            Sua tarefa é aprimorar um rascunho, tornando-o mais completo, profissional e detalhado, mas sem ser excessivamente longo.
+            Você é um Tecnico em Suporte (TI), redigindo o registro de um chamado para um sistema de tickets.
+            Sua tarefa é aprimorar um rascunho, tornando-o mais completo mas sem ser excessivamente longo.
             Adicione detalhes técnicos plausíveis que um analista de suporte teria realizado.
+            Tambem deixe em Negrito Parte onde eu precisem ser completadas se houver
 
             RASCUNHO BASE (use como contexto):
             ---
