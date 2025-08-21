@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const itemDiv = document.createElement('div');
         itemDiv.className = 'template-item';
 
-        // Label e Input para a Chave (Nome do Padrão)
         const keyLabel = document.createElement('label');
         keyLabel.textContent = 'Nome do Padrão (sem espaços ou acentos, ex: "novaInstalacao")';
         const keyInput = document.createElement('input');
@@ -31,24 +30,23 @@ document.addEventListener('DOMContentLoaded', function () {
         keyInput.className = 'template-key-input';
         keyInput.placeholder = 'ex: novoPadrao';
         if (!isNew) {
-            keyInput.readOnly = true; // Chaves existentes não podem ser editadas para evitar quebrar a lógica
+            keyInput.readOnly = true;
         }
 
-        // Label e Textarea para o Conteúdo do Padrão
         const valueLabel = document.createElement('label');
-        valueLabel.textContent = 'Conteúdo do Padrão (use ${acao} onde a ação principal deve entrar)';
+        valueLabel.textContent = 'Conteúdo do Padrão';
         const valueTextarea = document.createElement('textarea');
         valueTextarea.value = value;
         valueTextarea.className = 'template-value-textarea';
-        valueTextarea.placeholder = 'Prezado(a) usuário(a),\n\nRealizamos a seguinte ação: ${acao}.\n\nAtenciosamente,\nEquipe TI';
+        // MODIFICADO: Placeholder atualizado para ensinar o novo formato de variáveis
+        valueTextarea.placeholder = 'Use variáveis como _START_NOME_USUARIO_, _START_TICKET_ e _START_ACAO_ para criar campos dinâmicos.';
 
-        // Botão para Deletar
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = 'Excluir';
         deleteBtn.className = 'btn-delete';
         deleteBtn.addEventListener('click', () => {
             if (confirm(`Tem certeza que deseja excluir o padrão "${keyInput.value}"?`)) {
-                itemDiv.remove(); // Remove o elemento da tela
+                itemDiv.remove();
             }
         });
 
@@ -62,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     addBtn.addEventListener('click', () => {
-        const novoTemplate = criarElementoDeTemplate('', '', true); // isNew = true
+        const novoTemplate = criarElementoDeTemplate('', '', true);
         formContainer.appendChild(novoTemplate);
     });
 
@@ -85,12 +83,6 @@ document.addEventListener('DOMContentLoaded', function () {
                  hasError = true;
                  return;
             }
-            if (!value.includes('${acao}')) {
-                if(!confirm(`Atenção: O padrão "${key}" não contém a variável \${acao}. Deseja continuar mesmo assim?`)){
-                    hasError = true;
-                    return;
-                }
-            }
             
             novosTemplates[key] = value;
         });
@@ -98,7 +90,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!hasError) {
             localStorage.setItem('meusTemplates', JSON.stringify(novosTemplates));
             alert('Padrões salvos com sucesso!');
-            // Recarrega para definir os inputs de chave como 'readonly'
             templates = novosTemplates;
             renderizarTemplates();
         }

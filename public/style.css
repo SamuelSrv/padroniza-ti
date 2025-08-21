@@ -42,7 +42,7 @@ body {
     transition: background-color 0.3s, color 0.3s;
 }
 
-/* --- NOVO HEADER FIXO --- */
+/* --- HEADER FIXO --- */
 #main-header {
     width: 100%;
     background-color: var(--header-bg);
@@ -55,14 +55,13 @@ body {
     z-index: 1000;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    /* Alinha itens nas pontas */
+    justify-content: space-between; /* Alinha itens nas pontas */
     box-sizing: border-box;
     transition: background-color 0.3s;
 }
 
 .header-logo img {
-    height: 50px;
+    height: 35px; /* Tamanho do logo na barra */
     width: auto;
 }
 
@@ -90,9 +89,6 @@ body {
     align-items: center;
 }
 
-/* --- FIM DO NOVO HEADER --- */
-
-
 .container {
     background-color: var(--container-bg-color);
     padding: 30px;
@@ -109,6 +105,7 @@ h1 {
     color: var(--text-color);
     text-align: center;
     margin-bottom: 25px;
+    margin-top: 0; /* Remove margem extra no topo */
 }
 
 label {
@@ -151,16 +148,19 @@ button:hover {
     background-color: #0056b3;
 }
 
-#userInput {
-    height: 110px;
-    font-size: 16px;
-    resize: none;
+/* Regra específica para textareas dentro do container principal */
+.container > textarea,
+.dynamic-input[type="textarea"] {
+    min-height: 110px;
+    resize: vertical;
 }
 
 #outputScript {
     height: 200px;
+    min-height: 200px; /* Garante que não comece menor */
     font-size: 14px;
-    resize: none;
+    resize: vertical;
+    max-height: 400px;
 }
 
 #theme-toggle {
@@ -173,8 +173,7 @@ button:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0;
-    /* Reseta margem */
+    margin: 0; /* Reseta margem */
 }
 
 #theme-toggle:hover {
@@ -214,6 +213,8 @@ button:hover {
     background-color: #0056B3;
 }
 
+/* --- ÁREA DE EDIÇÃO DE PADRÕES --- */
+
 .template-item {
     background-color: var(--item-bg-color);
     border: 1px solid var(--item-border-color);
@@ -221,11 +222,19 @@ button:hover {
     padding: 20px;
     margin-bottom: 20px;
     transition: background-color 0.3s, border-color 0.3s;
+    /* INÍCIO DA ALTERAÇÃO */
+    display: flex;
+    flex-direction: column; /* Organiza os filhos (labels, inputs, botão) em coluna */
 }
 
 .template-item label {
     margin-top: 0;
     font-size: 14px;
+}
+
+.template-item input[type="text"],
+.template-item textarea {
+    margin-bottom: 15px; /* Adiciona espaço abaixo dos campos de texto */
 }
 
 .template-item input[type="text"] {
@@ -249,7 +258,9 @@ button:hover {
     width: auto;
     padding: 8px 15px;
     font-size: 14px;
-    float: right;
+    /* FIM DA ALTERAÇÃO */
+    align-self: flex-end; /* Alinha o botão à direita dentro do card */
+    margin-top: 0; /* Remove a margem superior padrão dos botões */
 }
 
 .btn-delete:hover {
@@ -262,15 +273,4 @@ button:hover {
 
 .btn-add:hover {
     background-color: #218838;
-}
-
-.actions-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.actions-footer a {
-    color: var(--link-color);
 }
