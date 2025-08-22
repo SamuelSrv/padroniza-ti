@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const prompt = `
             Você é um especialista em Suporte Técnico (TI) sênior, redigindo o registro de um chamado para um sistema de tickets.
-            Sua tarefa é criar um registro profissional e completo usando as seguintes informações:
+            Sua tarefa é criar um registro usando as seguintes informações:
 
             **INFORMAÇÕES DO CHAMADO (se fornecidas):**
             - Número do Chamado: ${advancedData.ticketNumber || 'Não informado'}
