@@ -11,6 +11,8 @@
     --item-bg-color: #f9f9f9;
     --item-border-color: #e0e0e0;
     --header-bg: #ffffff;
+    --secondary-btn-bg: #6c757d;
+    --secondary-btn-hover-bg: #5a6268;
 }
 
 /* Definição das variáveis para o tema escuro */
@@ -26,6 +28,8 @@
     --item-bg-color: #3a3b3c;
     --item-border-color: #555;
     --header-bg: #242526;
+    --secondary-btn-bg: #5a6268;
+    --secondary-btn-hover-bg: #495057;
 }
 
 body {
@@ -33,7 +37,6 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     margin: 0;
-    /* Adiciona padding no topo do body para não ficar atrás do header fixo */
     padding-top: 80px;
     display: flex;
     justify-content: center;
@@ -55,13 +58,13 @@ body {
     z-index: 1000;
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Alinha itens nas pontas */
+    justify-content: space-between;
     box-sizing: border-box;
     transition: background-color 0.3s;
 }
 
 .header-logo img {
-    height: 35px; /* Tamanho do logo na barra */
+    height: 35px;
     width: auto;
 }
 
@@ -105,7 +108,7 @@ h1 {
     color: var(--text-color);
     text-align: center;
     margin-bottom: 25px;
-    margin-top: 0; /* Remove margem extra no topo */
+    margin-top: 0;
 }
 
 label {
@@ -148,18 +151,23 @@ button:hover {
     background-color: #0056b3;
 }
 
-/* Regra específica para textareas dentro do container principal */
-.container > textarea,
-.dynamic-input[type="textarea"] {
-    min-height: 110px;
+textarea {
     resize: vertical;
+}
+
+#mainActionInput {
+    min-height: 120px;
+    max-height: 300px;
+}
+
+.dynamic-input {
+    margin-bottom: 10px;
 }
 
 #outputScript {
     height: 200px;
-    min-height: 200px; /* Garante que não comece menor */
+    min-height: 200px;
     font-size: 14px;
-    resize: vertical;
     max-height: 400px;
 }
 
@@ -173,7 +181,7 @@ button:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0; /* Reseta margem */
+    margin: 0;
 }
 
 #theme-toggle:hover {
@@ -202,7 +210,7 @@ button:hover {
 
 .btn-secondary {
     width: auto;
-    background-color: #007bff;
+    background-color: var(--secondary-btn-bg);
     font-size: 14px;
     font-weight: normal;
     padding: 8px 15px;
@@ -210,8 +218,35 @@ button:hover {
 }
 
 .btn-secondary:hover {
-    background-color: #0056B3;
+    background-color: var(--secondary-btn-hover-bg);
 }
+
+/* --- NOVOS ESTILOS PARA OPÇÕES AVANÇADAS --- */
+.btn-toggle {
+    width: 100%;
+    margin-top: 15px;
+    background-color: var(--item-bg-color);
+    color: var(--label-color);
+    border: 1px solid var(--border-color);
+    font-weight: normal;
+}
+
+.btn-toggle:hover {
+    background-color: var(--bg-color);
+}
+
+.hidden {
+    display: none;
+}
+
+#advanced-options-container {
+    padding: 20px;
+    margin-top: 10px;
+    background-color: var(--bg-color);
+    border-radius: 6px;
+}
+/* --- FIM DOS NOVOS ESTILOS --- */
+
 
 /* --- ÁREA DE EDIÇÃO DE PADRÕES --- */
 
@@ -222,9 +257,8 @@ button:hover {
     padding: 20px;
     margin-bottom: 20px;
     transition: background-color 0.3s, border-color 0.3s;
-    /* INÍCIO DA ALTERAÇÃO */
     display: flex;
-    flex-direction: column; /* Organiza os filhos (labels, inputs, botão) em coluna */
+    flex-direction: column;
 }
 
 .template-item label {
@@ -232,9 +266,9 @@ button:hover {
     font-size: 14px;
 }
 
-.template-item input[type="text"],
+.template-item input,
 .template-item textarea {
-    margin-bottom: 15px; /* Adiciona espaço abaixo dos campos de texto */
+    margin-bottom: 15px;
 }
 
 .template-item input[type="text"] {
@@ -258,9 +292,8 @@ button:hover {
     width: auto;
     padding: 8px 15px;
     font-size: 14px;
-    /* FIM DA ALTERAÇÃO */
-    align-self: flex-end; /* Alinha o botão à direita dentro do card */
-    margin-top: 0; /* Remove a margem superior padrão dos botões */
+    align-self: flex-end;
+    margin-top: 0;
 }
 
 .btn-delete:hover {

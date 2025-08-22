@@ -30,11 +30,26 @@
 
         <h1>Gerador de Script de Encerramento</h1>
 
-        <label for="templateSelector">Selecione o Padrão do Chamado:</label>
+        <label for="mainActionInput">Qual foi a ação principal realizada?</label>
+        <textarea id="mainActionInput" rows="5" placeholder="Descreva aqui o serviço executado. Esta é a informação principal que será usada pela IA."></textarea>
+
+        <label for="templateSelector">Selecione um Padrão (Opcional):</label>
         <select id="templateSelector"></select>
 
         <div id="dynamic-inputs-container"></div>
 
+        <button id="toggleAdvancedBtn" class="btn-secondary btn-toggle">Opções Avançadas ▼</button>
+        
+        <div id="advanced-options-container" class="hidden">
+            <label for="ticketNumberInput">Número do Chamado:</label>
+            <input type="text" id="ticketNumberInput" placeholder="Ex: 123456">
+
+            <label for="requesterInput">Solicitante:</label>
+            <input type="text" id="requesterInput" placeholder="Nome do usuário que abriu o chamado">
+
+            <label for="departmentInput">Departamento:</label>
+            <input type="text" id="departmentInput" placeholder="Setor do solicitante">
+        </div>
         <button id="generateBtn">Gerar Script de Encerramento</button>
 
         <div class="output-header">

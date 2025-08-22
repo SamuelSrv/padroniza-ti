@@ -1,8 +1,14 @@
 document.addEventListener('DOMContentLoaded', function () {
 
     // --- OBJETOS E VARIÁVEIS ---
+    const mainActionInput = document.getElementById('mainActionInput');
     const templateSelector = document.getElementById('templateSelector');
     const dynamicInputsContainer = document.getElementById('dynamic-inputs-container');
+    const toggleAdvancedBtn = document.getElementById('toggleAdvancedBtn');
+    const advancedOptionsContainer = document.getElementById('advanced-options-container');
+    const ticketNumberInput = document.getElementById('ticketNumberInput');
+    const requesterInput = document.getElementById('requesterInput');
+    const departmentInput = document.getElementById('departmentInput');
     const generateBtn = document.getElementById('generateBtn');
     const outputScript = document.getElementById('outputScript');
     const copyBtn = document.getElementById('copyBtn');
@@ -12,10 +18,11 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- FUNÇÕES ---
 
     function carregarTemplates() {
+        // ... (código existente, sem alterações)
         const templatesSalvos = localStorage.getItem('meusTemplates');
         if (!templatesSalvos || Object.keys(JSON.parse(templatesSalvos)).length === 0) {
             templates = {
-                resetDeSenha: `Prezado(a) _START_NOME_USUARIO_,\n\nConforme solicitado no chamado _START_NUMERO_CHAMADO_, realizamos o procedimento a seguir.\n\nAção Principal: Reset da sua senha de rede.\n\nSua nova senha temporária é: *********\n\nAtenciosamente,\nEquipe de Suporte TI`
+                resetDeSenha: `Prezado(a) _START_NOME_USUARIO_,\n\nConforme solicitado, realizamos o procedimento a seguir.\n\nAção Principal: Reset da sua senha de rede.\n\nSua nova senha temporária é: *********\n\nAtenciosamente,\nEquipe de Suporte TI`
             };
             localStorage.setItem('meusTemplates', JSON.stringify(templates));
         } else {
@@ -24,23 +31,19 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function popularSelecaoDeTemplates() {
+        // ... (código existente, sem alterações)
         templateSelector.innerHTML = '';
         if (!templates || Object.keys(templates).length === 0) {
             const option = document.createElement('option');
             option.textContent = 'Nenhum padrão encontrado';
             templateSelector.appendChild(option);
-            generateBtn.disabled = true;
-            generateBtn.textContent = 'Adicione padrões na página de edição';
             return;
         }
 
         const initialOption = document.createElement('option');
         initialOption.value = "";
-        initialOption.textContent = "Selecione um padrão...";
+        initialOption.textContent = "Nenhum (usar apenas a descrição acima)";
         templateSelector.appendChild(initialOption);
-
-        generateBtn.disabled = false;
-        generateBtn.textContent = 'Gerar Script de Encerramento';
 
         for (const key in templates) {
             const option = document.createElement('option');
@@ -52,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
     function encontrarVariaveis(texto) {
+        // ... (código existente, sem alterações)
         const regex = /_START_([a-zA-Z0-9_]+)_/g;
         const matches = [...texto.matchAll(regex)];
         const variaveisUnicas = new Set(matches.map(match => match[1]));
@@ -59,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function renderizarInputsDinamicos(keyDoTemplate) {
+        // ... (código existente, sem alterações)
         dynamicInputsContainer.innerHTML = '';
         if (!keyDoTemplate || !templates[keyDoTemplate]) {
             return;
@@ -91,60 +96,76 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // MODIFICADO: Função principal de gerar foi atualizada para coletar todos os dados
     async function handleGerarScript() {
-        const templateKey = templateSelector.value;
-        if (!templateKey) {
-            alert('Por favor, selecione um padrão.');
+        const mainAction = mainActionInput.value;
+        if (mainAction.trim() === '') {
+            alert('Por favor, descreva a ação principal realizada.');
+            mainActionInput.focus();
             return;
         }
 
-        let rascunho = templates[templateKey];
-        const variaveis = encontrarVariaveis(rascunho);
-        let todosPreenchidos = true;
+        const templateKey = templateSelector.value;
+        let filledTemplate = "";
 
-        variaveis.forEach(variavel => {
-            const input = document.getElementById(`input-${variavel}`);
-            const valor = input.value;
-            if (valor.trim() === '') {
-                todosPreenchidos = false;
-            }
-            const regex = new RegExp(`_START_${variavel}_`, 'g');
-            rascunho = rascunho.replace(regex, valor);
-        });
-
-        if (!todosPreenchidos) {
-            if (!confirm('Atenção: um ou mais campos estão vazios. Deseja continuar mesmo assim?')) {
-                return;
-            }
+        if (templateKey && templates[templateKey]) {
+            filledTemplate = templates[templateKey];
+            const variaveis = encontrarVariaveis(filledTemplate);
+            variaveis.forEach(variavel => {
+                const input = document.getElementById(`input-${variavel}`);
+                const valor = input ? input.value : '';
+                const regex = new RegExp(`_START_${variavel}_`, 'g');
+                filledTemplate = filledTemplate.replace(regex, valor);
+            });
         }
+
+        const advancedData = {
+            ticketNumber: ticketNumberInput.value,
+            requester: requesterInput.value,
+            department: departmentInput.value
+        };
         
-        gerarScriptComIA(rascunho);
+        gerarScriptComIA(mainAction, filledTemplate, advancedData);
     }
 
-    async function gerarScriptComIA(rascunho) {
+    // MODIFICADO: Função da IA agora recebe mais dados e monta um prompt mais inteligente
+    async function gerarScriptComIA(mainAction, filledTemplate, advancedData) {
         generateBtn.disabled = true;
         generateBtn.textContent = 'Gerando com IA...';
         outputScript.value = 'Aguarde, a Inteligência Artificial está pensando...';
 
         const prompt = `
             Você é um especialista em Suporte Técnico (TI) sênior, redigindo o registro de um chamado para um sistema de tickets.
-            Sua tarefa é aprimorar o seguinte rascunho, tornando-o mais completo, profissional e detalhado, mas sem ser excessivamente longo.
-            Adicione detalhes técnicos plausíveis que um analista de suporte teria realizado, com base nas informações fornecidas.
+            Sua tarefa é criar um registro profissional e completo usando as seguintes informações:
 
-            RASCUNHO BASE (use como contexto):
+            **INFORMAÇÕES DO CHAMADO (se fornecidas):**
+            - Número do Chamado: ${advancedData.ticketNumber || 'Não informado'}
+            - Solicitante: ${advancedData.requester || 'Não informado'}
+            - Departamento: ${advancedData.department || 'Não informado'}
+
+            **DESCRIÇÃO PRINCIPAL DA AÇÃO REALIZADA (informação mais importante):**
             ---
-            ${rascunho}
+            ${mainAction}
             ---
 
-            Aprimore o rascunho acima. Mantenha a estrutura principal. Foque em detalhar melhor o corpo do texto sobre o que foi feito.
-            Seja claro, profissional e conclusivo. Gere apenas o texto final do registro.
+            **ESTRUTURA E CONTEXTO DO TEMPLATE (se um padrão foi usado):**
+            ---
+            ${filledTemplate || 'Nenhum padrão utilizado'}
+            ---
+
+            **SUAS INSTRUÇÕES:**
+            1.  Baseie o corpo principal do seu texto na "DESCRIÇÃO PRINCIPAL DA AÇÃO REALIZADA". Esta é a fonte da verdade sobre o que foi feito.
+            2.  Incorpore as "INFORMAÇÕES DO CHAMADO" de forma natural no registro. Por exemplo, comece com uma saudação ao solicitante.
+            3.  Use a "ESTRUTURA E CONTEXTO DO TEMPLATE" principalmente para guiar a saudação inicial e a frase de encerramento, mas a descrição do serviço deve vir da "DESCRIÇÃO PRINCIPAL".
+            4.  Enriqueça o texto com detalhes técnicos plausíveis que um analista de TI teria executado.
+            5.  O resultado final deve ser apenas o texto do registro, claro, profissional e conclusivo.
         `;
 
         try {
             const response = await fetch('/api/generate', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ prompt: prompt })
+                body: JSON.stringify({ prompt })
             });
 
             if (!response.ok) {
@@ -169,9 +190,22 @@ document.addEventListener('DOMContentLoaded', function () {
         renderizarInputsDinamicos(event.target.value);
     });
 
+    // NOVO: Evento para o botão de Opções Avançadas
+    toggleAdvancedBtn.addEventListener('click', () => {
+        const isHidden = advancedOptionsContainer.classList.contains('hidden');
+        if (isHidden) {
+            advancedOptionsContainer.classList.remove('hidden');
+            toggleAdvancedBtn.textContent = 'Opções Avançadas ▲';
+        } else {
+            advancedOptionsContainer.classList.add('hidden');
+            toggleAdvancedBtn.textContent = 'Opções Avançadas ▼';
+        }
+    });
+
     generateBtn.addEventListener('click', handleGerarScript);
 
     copyBtn.addEventListener('click', () => {
+        // ... (código existente, sem alterações)
         if (outputScript.value) {
             navigator.clipboard.writeText(outputScript.value).then(() => {
                 const originalText = copyBtn.textContent;
