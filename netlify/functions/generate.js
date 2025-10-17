@@ -16,15 +16,15 @@ exports.handler = async function(event, context) {
             return { statusCode: 400, body: JSON.stringify({ error: 'O prompt é obrigatório.' }) };
         }
         
-        // MUDANÇA 1: Alterando o nome do modelo para o PaLM 2
+        // 1. MANTEMOS O MODELO QUE FUNCIONOU (sem 404):
         const model = genAI.getGenerativeModel({ model: 'text-bison-001' });
         
-        // MUDANÇA 2: Alterando o método de chamada para .generateText()
-        // O prompt também deve ser formatado de forma diferente para este modelo
-        const result = await model.generateText(prompt);
+        // 2. CORRIGIMOS A FUNÇÃO DE CHAMADA DE VOLTA PARA .generateContent()
+        const result = await model.generateContent(prompt);
         
-        // O resultado do PaLM 2 é um texto simples, não um objeto complexo
-        const text = result; 
+        // 3. E lemos a resposta da forma correta
+        const response = await result.response;
+        const text = response.text(); 
 
         // Retorna o sucesso
         return {
