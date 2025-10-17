@@ -16,10 +16,10 @@ exports.handler = async function(event, context) {
             return { statusCode: 400, body: JSON.stringify({ error: 'O prompt é obrigatório.' }) };
         }
         
-        // MODIFICAÇÃO FINAL: Usando o modelo mais recente e padrão.
-        // Saí: 'gemini-1.0-pro'
-        // Entra: 'gemini-1.5-flash'
-        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+        // MODIFICAÇÃO FINAL: Voltando ao 'gemini-pro' no projeto novo.
+        // Saí: 'gemini-1.5-flash'
+        // Entra: 'gemini-pro'
+        const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
         
         // Gera o conteúdo usando o prompt
         const result = await model.generateContent(prompt);
@@ -33,7 +33,7 @@ exports.handler = async function(event, context) {
         };
 
     } catch (error) {
-        // CÓDIGO FINAL: Revertemos ao bloco catch original
+        // Bloco catch original
         console.error('Erro na função:', error);
         return {
             statusCode: 500,
