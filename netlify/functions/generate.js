@@ -16,15 +16,15 @@ exports.handler = async function(event, context) {
             return { statusCode: 400, body: JSON.stringify({ error: 'O prompt é obrigatório.' }) };
         }
         
-        // MODIFICAÇÃO FINAL: Voltando ao 'gemini-pro' no projeto novo.
-        // Saí: 'gemini-1.5-flash'
-        // Entra: 'gemini-pro'
-        const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+        // MUDANÇA 1: Alterando o nome do modelo para o PaLM 2
+        const model = genAI.getGenerativeModel({ model: 'text-bison-001' });
         
-        // Gera o conteúdo usando o prompt
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const text = response.text();
+        // MUDANÇA 2: Alterando o método de chamada para .generateText()
+        // O prompt também deve ser formatado de forma diferente para este modelo
+        const result = await model.generateText(prompt);
+        
+        // O resultado do PaLM 2 é um texto simples, não um objeto complexo
+        const text = result; 
 
         // Retorna o sucesso
         return {
