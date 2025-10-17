@@ -16,30 +16,28 @@ exports.handler = async function(event, context) {
             return { statusCode: 400, body: JSON.stringify({ error: 'O prompt é obrigatório.' }) };
         }
         
-        // Vamos manter o último nome de modelo que tentamos
-        const model = genAI.getGenerativeModel({ model: 'gemini-1.0-pro' });
+        // MODIFICAÇÃO FINAL: Usando o modelo mais recente e padrão.
+        // Saí: 'gemini-1.0-pro'
+        // Entra: 'gemini-1.5-flash'
+        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
         
         // Gera o conteúdo usando o prompt
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const text = response.text();
 
+        // Retorna o sucesso
         return {
             statusCode: 200,
             body: JSON.stringify({ text: text }),
         };
 
     } catch (error) {
-        console.error('Erro na função (tentativa de log):', error); // Mantemos isso, caso o log volte
-        
-        // ALTERAÇÃO DE DEBUG:
-        // Em vez de uma mensagem genérica, vamos enviar a mensagem de erro real
-        // de volta para o navegador para que possamos vê-la no console (F12).
+        // CÓDIGO FINAL: Revertemos ao bloco catch original
+        console.error('Erro na função:', error);
         return {
             statusCode: 500,
-            body: JSON.stringify({ 
-                error: 'Ocorreu um erro no servidor. Mensagem real: ' + error.message 
-            }),
+            body: JSON.stringify({ error: 'Ocorreu um erro ao processar sua solicitação.' }),
         };
     }
 };
