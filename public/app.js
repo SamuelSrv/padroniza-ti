@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- FUNÇÕES ---
 
     function carregarTemplates() {
-        // ... (código existente, sem alterações)
         const templatesSalvos = localStorage.getItem('meusTemplates');
         if (!templatesSalvos || Object.keys(JSON.parse(templatesSalvos)).length === 0) {
             templates = {
@@ -31,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function popularSelecaoDeTemplates() {
-        // ... (código existente, sem alterações)
         templateSelector.innerHTML = '';
         if (!templates || Object.keys(templates).length === 0) {
             const option = document.createElement('option');
@@ -55,7 +53,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
     function encontrarVariaveis(texto) {
-        // ... (código existente, sem alterações)
         const regex = /_START_([a-zA-Z0-9_]+)_/g;
         const matches = [...texto.matchAll(regex)];
         const variaveisUnicas = new Set(matches.map(match => match[1]));
@@ -63,7 +60,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function renderizarInputsDinamicos(keyDoTemplate) {
-        // ... (código existente, sem alterações)
         dynamicInputsContainer.innerHTML = '';
         if (!keyDoTemplate || !templates[keyDoTemplate]) {
             return;
@@ -96,7 +92,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // MODIFICADO: Função principal de gerar foi atualizada para coletar todos os dados
     async function handleGerarScript() {
         const mainAction = mainActionInput.value;
         if (mainAction.trim() === '') {
@@ -128,7 +123,6 @@ document.addEventListener('DOMContentLoaded', function () {
         gerarScriptComIA(mainAction, filledTemplate, advancedData);
     }
 
-    // MODIFICADO: Função da IA agora recebe mais dados e monta um prompt mais inteligente
     async function gerarScriptComIA(mainAction, filledTemplate, advancedData) {
         generateBtn.disabled = true;
         generateBtn.textContent = 'Gerando com IA...';
@@ -136,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const prompt = `
             Você é um especialista em Suporte Técnico (TI) sênior, redigindo o registro de um chamado para um sistema de tickets.
-            Sua tarefa é criar um registro usando as seguintes informações:
+            Sua tarefa é criar um registro profissional e completo usando as seguintes informações:
 
             **INFORMAÇÕES DO CHAMADO (se fornecidas):**
             - Número do Chamado: ${advancedData.ticketNumber || 'Não informado'}
@@ -190,7 +184,6 @@ document.addEventListener('DOMContentLoaded', function () {
         renderizarInputsDinamicos(event.target.value);
     });
 
-    // NOVO: Evento para o botão de Opções Avançadas
     toggleAdvancedBtn.addEventListener('click', () => {
         const isHidden = advancedOptionsContainer.classList.contains('hidden');
         if (isHidden) {
@@ -205,7 +198,6 @@ document.addEventListener('DOMContentLoaded', function () {
     generateBtn.addEventListener('click', handleGerarScript);
 
     copyBtn.addEventListener('click', () => {
-        // ... (código existente, sem alterações)
         if (outputScript.value) {
             navigator.clipboard.writeText(outputScript.value).then(() => {
                 const originalText = copyBtn.textContent;

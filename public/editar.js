@@ -11,9 +11,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function renderizarTemplates() {
-        formContainer.innerHTML = ''; // Limpa a lista antes de renderizar
+        formContainer.innerHTML = '';
         for (const key in templates) {
-            const templateElement = criarElementoDeTemplate(key, templates[key], false); // isNew = false
+            const templateElement = criarElementoDeTemplate(key, templates[key], false);
             formContainer.appendChild(templateElement);
         }
     }
@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const valueTextarea = document.createElement('textarea');
         valueTextarea.value = value;
         valueTextarea.className = 'template-value-textarea';
-        // MODIFICADO: Placeholder atualizado para ensinar o novo formato de variáveis
         valueTextarea.placeholder = 'Use variáveis como _START_NOME_USUARIO_, _START_TICKET_ e _START_ACAO_ para criar campos dinâmicos.';
 
         const deleteBtn = document.createElement('button');

@@ -1,7 +1,9 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
+// Inicializa o cliente fora do handler
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 
+// Esta é a função principal que o Netlify irá executar
 exports.handler = async function(event, context) {
     if (event.httpMethod !== 'POST') {
         return { statusCode: 405, body: 'Method Not Allowed' };
@@ -14,7 +16,7 @@ exports.handler = async function(event, context) {
             return { statusCode: 400, body: JSON.stringify({ error: 'O prompt é obrigatório.' }) };
         }
         
-        // Vamos usar o modelo mais recente
+        // Vamos usar o modelo mais moderno e rápido
         const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
         
         // E o método .generateContent()

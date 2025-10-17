@@ -221,7 +221,7 @@ textarea {
     background-color: var(--secondary-btn-hover-bg);
 }
 
-/* --- NOVOS ESTILOS PARA OPÇÕES AVANÇADAS --- */
+/* --- ESTILOS PARA OPÇÕES AVANÇADAS --- */
 .btn-toggle {
     width: 100%;
     margin-top: 15px;
@@ -245,8 +245,6 @@ textarea {
     background-color: var(--bg-color);
     border-radius: 6px;
 }
-/* --- FIM DOS NOVOS ESTILOS --- */
-
 
 /* --- ÁREA DE EDIÇÃO DE PADRÕES --- */
 
