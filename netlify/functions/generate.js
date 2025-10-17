@@ -16,10 +16,10 @@ exports.handler = async function(event, context) {
             return { statusCode: 400, body: JSON.stringify({ error: 'O prompt é obrigatório.' }) };
         }
         
-        // MODIFICAÇÃO AQUI: Corrigimos o nome do modelo para 'gemini-pro'
-        // Saí: 'gemini-1.5-flash'
-        // Entra: 'gemini-pro'
-        const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+        // MODIFICAÇÃO AQUI: Corrigimos o nome do modelo para 'gemini-1.0-pro'
+        // Saí: 'gemini-pro'
+        // Entra: 'gemini-1.0-pro'
+        const model = genAI.getGenerativeModel({ model: 'gemini-1.0-pro' });
         
         // Gera o conteúdo usando o prompt
         const result = await model.generateContent(prompt);
