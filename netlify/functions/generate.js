@@ -1,9 +1,7 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
-// Inicializa o cliente fora do handler
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 
-// Esta é a função principal que o Netlify irá executar
 exports.handler = async function(event, context) {
     if (event.httpMethod !== 'POST') {
         return { statusCode: 405, body: 'Method Not Allowed' };
@@ -16,24 +14,20 @@ exports.handler = async function(event, context) {
             return { statusCode: 400, body: JSON.stringify({ error: 'O prompt é obrigatório.' }) };
         }
         
-        // 1. MANTEMOS O MODELO QUE FUNCIONOU (sem 404):
-        const model = genAI.getGenerativeModel({ model: 'text-bison-001' });
+        // Vamos usar o modelo mais recente
+        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
         
-        // 2. CORRIGIMOS A FUNÇÃO DE CHAMADA DE VOLTA PARA .generateContent()
+        // E o método .generateContent()
         const result = await model.generateContent(prompt);
-        
-        // 3. E lemos a resposta da forma correta
         const response = await result.response;
-        const text = response.text(); 
+        const text = response.text();
 
-        // Retorna o sucesso
         return {
             statusCode: 200,
             body: JSON.stringify({ text: text }),
         };
 
     } catch (error) {
-        // Bloco catch original
         console.error('Erro na função:', error);
         return {
             statusCode: 500,
